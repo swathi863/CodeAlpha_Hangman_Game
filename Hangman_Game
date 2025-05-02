@@ -1,0 +1,127 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyPHOpgaSbdV1N8bkOwMq/qK",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/swathi863/CodeAlpha_Hangman_Game/blob/main/Hangman_Game\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import random\n",
+        "\n",
+        "# List of words to choose from\n",
+        "word_list = ['python', 'hangman', 'challenge', 'google', 'notebook', 'programming']\n",
+        "\n",
+        "# Randomly select a word\n",
+        "word = random.choice(word_list)\n",
+        "word_letters = set(word)  # unique letters in the word\n",
+        "guessed_letters = set()\n",
+        "incorrect_guesses = 0\n",
+        "max_guesses = 6\n",
+        "\n",
+        "print(\"Welcome to Hangman!\")\n",
+        "print(\"_ \" * len(word))\n",
+        "\n",
+        "# Game loop\n",
+        "while len(word_letters) > 0 and incorrect_guesses < max_guesses:\n",
+        "    guess = input(\"Guess a letter: \").lower()\n",
+        "\n",
+        "    if len(guess) != 1 or not guess.isalpha():\n",
+        "        print(\"Please enter a single alphabetical character.\")\n",
+        "        continue\n",
+        "\n",
+        "    if guess in guessed_letters:\n",
+        "        print(\"You already guessed that letter. Try again.\")\n",
+        "        continue\n",
+        "\n",
+        "    guessed_letters.add(guess)\n",
+        "\n",
+        "    if guess in word_letters:\n",
+        "        word_letters.remove(guess)\n",
+        "        print(\"Good guess!\")\n",
+        "    else:\n",
+        "        incorrect_guesses += 1\n",
+        "        print(f\"Incorrect! You have {max_guesses - incorrect_guesses} guesses left.\")\n",
+        "\n",
+        "    # Show current progress\n",
+        "    display_word = [letter if letter in guessed_letters else \"_\" for letter in word]\n",
+        "    print(\"Current word: \", \" \".join(display_word))\n",
+        "\n",
+        "# Game result\n",
+        "if len(word_letters) == 0:\n",
+        "    print(\"Congratulations! You guessed the word:\", word)\n",
+        "else:\n",
+        "    print(\"Out of guesses. The word was:\", word)\n",
+        "\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "rU04ETz8xQLN",
+        "outputId": "afe7e76f-932a-4d40-c919-c6f8b3f6489d"
+      },
+      "execution_count": 3,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Welcome to Hangman!\n",
+            "_ _ _ _ _ _ \n",
+            "Guess a letter: p\n",
+            "Good guess!\n",
+            "Current word:  p _ _ _ _ _\n",
+            "Guess a letter: o\n",
+            "Good guess!\n",
+            "Current word:  p _ _ _ o _\n",
+            "Guess a letter: g\n",
+            "Incorrect! You have 5 guesses left.\n",
+            "Current word:  p _ _ _ o _\n",
+            "Guess a letter: i\n",
+            "Incorrect! You have 4 guesses left.\n",
+            "Current word:  p _ _ _ o _\n",
+            "Guess a letter: y\n",
+            "Good guess!\n",
+            "Current word:  p y _ _ o _\n",
+            "Guess a letter: n\n",
+            "Good guess!\n",
+            "Current word:  p y _ _ o n\n",
+            "Guess a letter: h\n",
+            "Good guess!\n",
+            "Current word:  p y _ h o n\n",
+            "Guess a letter: l\n",
+            "Incorrect! You have 3 guesses left.\n",
+            "Current word:  p y _ h o n\n",
+            "Guess a letter: t\n",
+            "Good guess!\n",
+            "Current word:  p y t h o n\n",
+            "Congratulations! You guessed the word: python\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
